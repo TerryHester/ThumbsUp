@@ -1,0 +1,42 @@
+body {
+    background-color: #dbdbdb;
+    font-family: Segoe UI;
+}
+
+button {
+    background-color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+.hand-word {
+    border: solid 1px;
+    background-color: white;
+    margin: 5px auto;
+    text-align: center;
+    cursor: pointer;
+    width: 300px;
+}
+
+.disabled {
+    color: lightgrey;
+    font-style: italic;
+    cursor: not-allowed;
+}
+
+.hand-word:hover {
+    background-color: #ededed;
+}
+
+.sentence-container {
+    display: flex;
+    border: 1px solid;
+}
+
+.sentence-word {
+    flex: 0 0 auto;
+    margin: 5px;
+    user-select: none;
+}
