@@ -1,5 +1,5 @@
 body {
-    background-color: #dbdbdb;
+    background-color: #aabfef;
     font-family: Segoe UI;
 }
 
@@ -11,6 +11,12 @@ button {
     cursor: pointer;
 }
 
+.hand-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
 .hand-word {
     border: solid 1px;
     background-color: white;
@@ -18,12 +24,14 @@ button {
     text-align: center;
     cursor: pointer;
     width: 300px;
+    flex: 0 0 auto;
+    font-size: 26px;
+    user-select: none;
 }
 
 .disabled {
     color: lightgrey;
     font-style: italic;
-    cursor: not-allowed;
 }
 
 .hand-word:hover {
@@ -33,10 +41,12 @@ button {
 .sentence-container {
     display: flex;
     border: 1px solid;
+    background-color: white;
 }
 
 .sentence-word {
     flex: 0 0 auto;
     margin: 5px;
     user-select: none;
+    font-size: 22px;
 }

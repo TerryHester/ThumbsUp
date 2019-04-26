@@ -1,16 +1,17 @@
 // set configurable values here
 const configuration = {
-    numNouns: 2,
-    numVerbs: 2,
-    numPronouns: 2,
-    numAdjectives: 2,
     numCommonWords: 2,
+    numNouns: 2,
+    numPronouns: 2,
+    numVerbs: 2,    
+    numAdjectives: 2,   
     numPrepositions: 2
 };
 
 const suffixes = [
     '',
     's',
+    'es',
     'ed',
     'ing'
 ]
@@ -178,7 +179,6 @@ const NounList = [
     'back',
     'parent',
     'face',
-    'others',
     'level',
     'office',
     'door',
@@ -203,9 +203,6 @@ const NounList = [
 ];
 
 const VerbList = [
-    'be',
-    'have',
-    'do',
     'say',
     'go',
     'get',
@@ -302,7 +299,12 @@ const VerbList = [
     'require',
     'report',
     'decide',
-    'pull'
+    'pull',
+    'flip',
+    'explore',
+    'save'
+
+    
 ]
 
 const AdjectiveList = [
@@ -360,31 +362,72 @@ const AdjectiveList = [
 
 const CommonList = [
     'the',
+    'the',
+    'the',
     'be',
+    'will be',
+    'will be',
+    'will be',
+    'will be',
+    'should be',
+    'might be',    
+    'can be',
+    'are',
+    'are',
     'are',
     'is',
+    'is',
+    'is',
     'am',
+    'am',
+    'am',
+    'to',
     'to',
     'of',
     'a',
-    'in',
+    'a',
+    'a',
     'that',
     'have',
-    'I',
-    'it',
-    'for',
-    'not',
-    'on',
-    'with',
-    'he',
+    'have',
+    'have',
+    'had',
+    'had',
     'as',
     'do',
+    'do',
+    'do',
+    'did',
+    'did',
+    'did',
     'at',
     'but',
+    'but',
+    'but',
+    "won't",
+    "wouldn't",
     'his',
     'by',
     'will',
-    'was'
+    'will',
+    'was',
+    'was',
+    'was',
+    'and',
+    'and',
+    'and',
+    'shall',
+    "isn't",
+    "isn't",
+    "wasn't",
+    "wasn't",
+    'the',
+    'the',
+    'the',
+    'a',
+    'a',
+    'a',
+
 ]
 
 const PrepositionList = [
@@ -438,11 +481,47 @@ let hand = [];
 
 let sentence = [];
 
-function renderSentence() {
+function RenderSentence() {
     ClearSentenceElements();
     sentence.forEach(word => {
-        AddElement(word.name + suffixes[word.suffix], 'sentence', () => IncrementSuffix(word.id), 'sentence-word', 'sentence-word-' + word.id);    
+        AddElement(
+            word.name + suffixes[word.suffix],
+            'sentence',
+            () => IncrementSuffix(word.id),
+            'sentence-word',
+            'sentence-word-' + word.id
+        );
     });
+}
+
+function RenderHand() {
+    console.log("render hand");
+    ClearHandElements();
+    hand.forEach(word => {
+        AddElement(
+            word.name,
+            'hand',
+            (word.isUsed ? undefined : () => AddToSentence(word.id)),
+            'hand-word ' + (word.isUsed ? 'disabled' : ''),
+            'hand-word-' + word.id
+        );
+    });
+}
+
+function BackspaceSentence() {
+    // remove last word from sentence
+    const lastWord = sentence.pop();
+    
+    // find word in hand and remove disabled class
+    for (let i = 0; i < hand.length; i++) {
+        if (lastWord.id === hand[i].id) {
+            hand[i].isUsed = false;
+            break;
+        }
+    }
+
+    RenderSentence();
+    RenderHand();
 }
 
 function IncrementSuffix(id) {
@@ -454,7 +533,7 @@ function IncrementSuffix(id) {
             }
         }
     }
-    renderSentence();
+    RenderSentence();
 }
 
 function GetRandomFromList(list) {
@@ -466,14 +545,14 @@ function AddElement(text, parentElementId, onClickFunction, className, id) {
     var textnode = document.createTextNode(text);
     node.onclick = onClickFunction;
     node.id = id;
-    node.classList.add(className);
+    className.trim().split(' ').forEach(x => node.classList.add(x));
+    // node.classList.add(className);
     node.appendChild(textnode);
     document.getElementById(parentElementId).appendChild(node);
 }
 
-function AddToWordList(text, parentElementId, index) {
+function AddToWordList(text, index) {
     hand.push({ id: index, name: text, isUsed: false });
-    AddElement(text, parentElementId, () => AddToSentence(index), 'hand-word', 'hand-word-' + index);
 }
 
 function AddToSentence(id) {
@@ -482,26 +561,21 @@ function AddToSentence(id) {
             // mark as used
             hand[i].isUsed = true;
             // add element to sentence
-            console.log('adding sentence')
             sentence.push({ id: id, name: hand[i].name, suffix: 0 });
             // disable clicked button
-            const node = document.getElementById('hand-word-' + id);
-            node.classList.add("disabled");
+            // const node = document.getElementById('hand-word-' + id);
+            // node.classList.add("disabled");
 
             break;
         }
     }
-    renderSentence();
-    console.log(sentence);
+    RenderSentence();
+    RenderHand();
 }
 
 function GenerateHand() {
     // remove any existing children nodes (previous words)
-    const handElementId = 'hand';
-    const node = document.getElementById(handElementId)
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
-    }
+    ClearHandElements();
 
     let listOfWords = [];
     hand = [];
@@ -530,21 +604,32 @@ function GenerateHand() {
     for (let i = 0; i < configuration.numPrepositions; i++) {
         listOfWords.push(GetRandomFromList(PrepositionList));
     }
-    listOfWords.forEach((x, i) => AddToWordList(x, handElementId, i));
+    listOfWords.forEach((x, i) => AddToWordList(x, i));
+    RenderHand();
 }
 
 function HandleSentenceClearedButton () {
     // clear disabled class on buttons
-    const disabledNodes = document.getElementsByClassName("disabled");
-    Array.from(disabledNodes).forEach(x => x.classList.remove('disabled'));
+    // const disabledNodes = document.getElementsByClassName("disabled");
+    // Array.from(disabledNodes).forEach(x => x.classList.remove('disabled'));
+    hand.forEach(x => x.isUsed = false);
     
     sentence = [];
     ClearSentenceElements();
+    RenderHand();
 }
 
 function ClearSentenceElements() {
     // clear words in sentence
     const node = document.getElementById('sentence')
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+}
+
+function ClearHandElements() {
+    // clear words in hand
+    const node = document.getElementById('hand')
     while (node.firstChild) {
         node.removeChild(node.firstChild);
     }
