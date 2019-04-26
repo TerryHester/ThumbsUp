@@ -12,8 +12,10 @@ const suffixes = [
     '',
     's',
     'es',
+    'd',
     'ed',
-    'ing'
+    'ing',
+    "'s"
 ]
 
 const PronounList = [
@@ -495,7 +497,6 @@ function RenderSentence() {
 }
 
 function RenderHand() {
-    console.log("render hand");
     ClearHandElements();
     hand.forEach(word => {
         AddElement(
