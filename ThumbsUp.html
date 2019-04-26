@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <h2>Thumbs Up!</h2>
+        <div>
+            <hr><h3>Your Hand</h3>
+            <button onClick="GenerateHand()">
+                Click to Deal
+            </button>
+            <div id="hand" class="hand-container"></div>
+        </div>
+        <div>
+            <hr><h3>Your Sentence</h3>
+            <div id="sentence" class="sentence-container"></div>
+            <button onClick="HandleSentenceClearedButton()">Clear</button>
+            <button onClick="BackspaceSentence()">Delete Last Word</button>
+        </div>
+    </body>
+</html>
