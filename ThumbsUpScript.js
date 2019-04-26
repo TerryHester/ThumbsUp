@@ -546,8 +546,9 @@ function AddElement(text, parentElementId, onClickFunction, className, id) {
     var textnode = document.createTextNode(text);
     node.onclick = onClickFunction;
     node.id = id;
-    className.trim().split(' ').forEach(x => node.classList.add(x));
-    // node.classList.add(className);
+    if (className !== undefined) {
+        className.trim().split(' ').forEach(x => node.classList.add(x));
+    }
     node.appendChild(textnode);
     document.getElementById(parentElementId).appendChild(node);
 }
@@ -563,10 +564,6 @@ function AddToSentence(id) {
             hand[i].isUsed = true;
             // add element to sentence
             sentence.push({ id: id, name: hand[i].name, suffix: 0 });
-            // disable clicked button
-            // const node = document.getElementById('hand-word-' + id);
-            // node.classList.add("disabled");
-
             break;
         }
     }
@@ -610,9 +607,6 @@ function GenerateHand() {
 }
 
 function HandleSentenceClearedButton () {
-    // clear disabled class on buttons
-    // const disabledNodes = document.getElementsByClassName("disabled");
-    // Array.from(disabledNodes).forEach(x => x.classList.remove('disabled'));
     hand.forEach(x => x.isUsed = false);
     
     sentence = [];
@@ -634,4 +628,11 @@ function ClearHandElements() {
     while (node.firstChild) {
         node.removeChild(node.firstChild);
     }
+}
+
+function SaveSentence() {
+    const sentenceList = [];
+    sentence.forEach(x => sentenceList.push(x.name));
+    const sentenceString = sentenceList.join(' ');
+    AddElement(sentenceString, 'sentences-saved');
 }
