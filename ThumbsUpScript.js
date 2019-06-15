@@ -22,59 +22,61 @@ const suffixes = [
 ]
 
 const PronounList = [
-    'all',
-    'anybody',
-    'anyone',
-    'anything',
-    'each',
-    'everybody',
-    'everyone',
-    'everything',
-    'he',
-    'her',
-    'hers',
-    'him',
-    'his',
-    'I',
-    'it',
-    'its',
-    'itself',
-    'many',
-    'me',
-    'mine',
-    'most',
-    'my',
-    'myself',
-    'nobody',
-    'none',
-    'nothing',
-    'one',
-    'our',
-    'ours',
-    'ourselves',
-    'several',
-    'she',
-    'some',
-    'someone',
-    'something',
-    'that',
-    'their',
-    'theirs',
-    'them',
-    'there',
-    'these',
-    'they',
-    'this',
-    'those',
-    'us',
-    'we',
-    'who',
-    'whoever',
-    'whose',
-    'you',
-    'your',
-    'yours',
-    'yourself',
+    'am',
+    'the'
+    // 'all',
+    // 'anybody',
+    // 'anyone',
+    // 'anything',
+    // 'each',
+    // 'everybody',
+    // 'everyone',
+    // 'everything',
+    // 'he',
+    // 'her',
+    // 'hers',
+    // 'him',
+    // 'his',
+    // 'I',
+    // 'it',
+    // 'its',
+    // 'itself',
+    // 'many',
+    // 'me',
+    // 'mine',
+    // 'most',
+    // 'my',
+    // 'myself',
+    // 'nobody',
+    // 'none',
+    // 'nothing',
+    // 'one',
+    // 'our',
+    // 'ours',
+    // 'ourselves',
+    // 'several',
+    // 'she',
+    // 'some',
+    // 'someone',
+    // 'something',
+    // 'that',
+    // 'their',
+    // 'theirs',
+    // 'them',
+    // 'there',
+    // 'these',
+    // 'they',
+    // 'this',
+    // 'those',
+    // 'us',
+    // 'we',
+    // 'who',
+    // 'whoever',
+    // 'whose',
+    // 'you',
+    // 'your',
+    // 'yours',
+    // 'yourself',
 ];
 
 const NounList = [
@@ -334,7 +336,7 @@ const AdjectiveList = [
     'better',
     'big',
     'black',
-    'elastim',
+    'elastic',
     'volcanic',
     'certain',
     'clear',
@@ -402,10 +404,10 @@ const AdjectiveList = [
     'grubby',
     'shakey',
     'faded',
-    'fisty',
+    'feisty',
     'honorable',    
     'slim',
-    'imphatic'
+    'emphatic'
 ]
 
 const CommonList = [
@@ -516,6 +518,11 @@ const PrepositionList = [
     'near',
 ]
 
+const wordGroups = {
+    "am": ["am", "is", "are", "be", "will be", "was", "have been"],
+    "the": ["the", "this", "those", "these", "a", "that"]
+}
+
 let hand = [];
 
 let sentence = [];
@@ -523,27 +530,53 @@ let sentence = [];
 let score = 0;
 
 function RenderSentence() {
-    ClearSentenceElements();
+    ClearElements('sentence');
     sentence.forEach(word => {
+        let alternateWordList = suffixes;
+        let wordToDisplay = word.name + alternateWordList[word.alternateId];
+        if (wordGroups[word.name] != undefined) {
+            // it's in the special word group list, so use that list instead
+            alternateWordList = wordGroups[word.name];
+            wordToDisplay = alternateWordList[word.alternateId];
+        }
+
         AddElement(
-            word.name + suffixes[word.suffix],
+            wordToDisplay,
             'sentence',
-            () => IncrementSuffix(word.id),
+            () => IncrementAlternateId(word.id, alternateWordList),
             'sentence-word',
-            'sentence-word-' + word.id 
+            'sentence-word-' + word.id
         );
     });
+
+    ClearElements('alternate-options');
+    if (sentence.length > 0) {
+        const finalWord = sentence[sentence.length - 1];
+        let alternateOptions = [];
+        if (wordGroups[finalWord.name]) {
+            wordGroups[finalWord.name].forEach(x => alternateOptions.push(x));
+        }
+        else {
+            suffixes.forEach(x => alternateOptions.push(x));
+        }
+        for (let i = 0; i < alternateOptions.length; i++) {
+            const option = alternateOptions[i];
+            AddElement(
+                (option === '' ? '[none]' : option),
+                'alternate-options',
+                () => SetAlternateId(finalWord.id, i),
+                'alternate-word',
+                'alternate-word-option-' + i);
+        }
+    }
 
     UpdateScore(sentence.length);
 }
 
 function RenderHand() {
-    ClearHandElements();
+    ClearElements('hand');
     hand.forEach(word => {
-        
-        
-        
-        
+
         AddElement(
             word.name,
             'hand',
@@ -570,13 +603,22 @@ function BackspaceSentence() {
     RenderHand();
 }
 
-function IncrementSuffix(id) {
+function IncrementAlternateId(sentenceItemId, alternateList) {
     for (let i = 0; i < sentence.length; i++) {
-        if (sentence[i].id === id) {
-            sentence[i].suffix++;
-            if (sentence[i].suffix >= suffixes.length) {
-                sentence[i].suffix = 0;
+        if (sentence[i].id === sentenceItemId) {
+            sentence[i].alternateId++;
+            if (sentence[i].alternateId >= alternateList.length) {
+                sentence[i].alternateId = 0;
             }
+        }
+    }
+    RenderSentence();
+}
+
+function SetAlternateId(sentenceItemId, alternateId) {
+    for (let i = 0; i < sentence.length; i++) {
+        if (sentence[i].id === sentenceItemId) {
+            sentence[i].alternateId = alternateId;
         }
     }
     RenderSentence();
@@ -609,7 +651,7 @@ function AddToSentence(id) {
             // mark as used
             hand[i].isUsed = true;
             // add element to sentence
-            sentence.push({ id: id, name: hand[i].name, suffix: 0 });
+            sentence.push({ id: id, name: hand[i].name, alternateId: 0 });
             break;
         }
     }
@@ -620,12 +662,10 @@ function AddToSentence(id) {
 function GenerateHand() {
     // remove any existing children nodes (previous words)
     
-    ClearHandElements();
-    ClearSentenceElements();
-    
-    
-    
-    
+    ClearElements('hand');
+    ClearElements('sentence');
+    ClearElements('alternate-options');
+
     score = 0;
 
     const scoreElement = document.getElementById('score');
@@ -633,7 +673,6 @@ function GenerateHand() {
     while (scoreElement.firstChild) {
         scoreElement.removeChild(scoreElement.firstChild);
     }
-
 
     sentence = [];
 
@@ -693,27 +732,15 @@ function UpdateScore(numWords) {
     scoreElement.appendChild(textElement);
 }
 
-function ClearSentenceElements() {
-    // clear words in sentence
-    const node = document.getElementById('sentence')
+function ClearElements(parentId) {
+    // clear child elements of a node
+    const node = document.getElementById(parentId)
     while (node.firstChild) {
         node.removeChild(node.firstChild);
     }
-}
-
-function ClearHandElements() {
-    // clear words in hand
-    const node = document.getElementById('hand')
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
-    }
-    
-    
 }
 
 function SaveSentence() {
-
-
     const sentenceList = [];
     sentence.forEach(x => sentenceList.push(x.name));
     const sentenceString = sentenceList.join(' ');
