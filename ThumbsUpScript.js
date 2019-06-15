@@ -12,15 +12,18 @@ const suffixes = [
     '',
     's',
     'es',
+    "'s",
     'd',
     'ed',
     'ing',
-    "'s"
+    "ly",
+    ",",
+    
 ]
 
 const PronounList = [
     'all',
-    'any',
+    'anybody',
     'anyone',
     'anything',
     'each',
@@ -98,6 +101,7 @@ const NounList = [
     'homework',
     'personality',
     'birthday',
+    "Uncle Bob",
     'university',
     'solution',
     'pizza',
@@ -127,6 +131,7 @@ const NounList = [
     'case',
     'week',
     'company',
+    "Mrs. Lilly",
     'system',
     'program',
     'question',
@@ -143,6 +148,7 @@ const NounList = [
     'money',
     'story',
     'fact',
+    "Tiny Tim",
     'month',
     'lot',
     'right',
@@ -173,6 +179,7 @@ const NounList = [
     'name',
     'president',
     'team',
+    'dragon',
     'minute',
     'idea',
     'kid',
@@ -188,6 +195,9 @@ const NounList = [
     'person',
     'art',
     'war',
+    'dude',
+    'penny',
+    'horse',
     'history',
     'party',
     'result',
@@ -198,6 +208,7 @@ const NounList = [
     'girl',
     'guy',
     'moment',
+    'bean',
     'air',
     'teacher',
     'force',
@@ -218,6 +229,9 @@ const VerbList = [
     'look',
     'use',
     'find',
+    'wiggle',
+    'expect',
+    'squeek',
     'give',
     'tell',
     'work',
@@ -275,6 +289,7 @@ const VerbList = [
     'grow',
     'open',
     'walk',
+    'unwind',
     'win',
     'offer',
     'remember',
@@ -284,11 +299,17 @@ const VerbList = [
     'buy',
     'wait',
     'serve',
+    'explode',
+    'argue',
     'die',
     'send',
     'expect',
     'build',
     'stay',
+    'bounce',
+    'sip',
+    'shred',
+    'dispatch',
     'fall',
     'cut',
     'reach',
@@ -304,76 +325,98 @@ const VerbList = [
     'pull',
     'flip',
     'explore',
-    'save'
-
-    
+    'save'    
 ]
 
 const AdjectiveList = [
-    'able',
     'bad',
     'best',
     'better',
     'big',
     'black',
+    'elastim',
+    'volcanic',
     'certain',
     'clear',
     'different',
     'early',
     'easy',
     'economic',
+    'doubtful',
+    'helpful',
     'federal',
     'free',
     'full',
-    'good',
+    'perplexing',
     'great',
     'hard',
     'high',
     'human',
     'important',
     'international',
-    'large',
+    'humongus',
     'late',
     'little',
     'local',
     'long',
-    'low',
+    'lovely',
+    'lanky',
+    'lofty',
     'major',
     'military',
     'national',
-    'new',
-    'old',
-    'only',
+    'extreme',
+    'ancient',
+    'problematic',
+    'impossible',
+    'personable',
     'other',
     'political',
     'possible',
     'public',
     'real',
     'recent',
+    'morbid',
     'right',
-    'small',
+    'tiny',
     'social',
     'special',
-    'strong',
-    'sure',
+    'infinite',
+    'distinct',
     'true',
-    'white',
+    'purple',
     'whole',
-    'young'
+    'chalky',
+    'sensable',
+    'imperfect',
+    'influencial',
+    'horid',
+    'frozen',
+    'insane',
+    'sinister',
+    'stubborn',
+    'insecure',
+    'twisted',
+    'useless',
+    'idiotic',
+    'grubby',
+    'shakey',
+    'faded',
+    'fisty',
+    'honorable',    
+    'slim',
+    'imphatic'
 ]
 
 const CommonList = [
     'the',
     'the',
     'the',
-    'be',
-    'will be',
-    'will be',
     'will be',
     'will be',
     'should be',
     'might be',    
-    'can be',
+    'could be',
     'are',
     'are',
     'are',
@@ -381,11 +424,6 @@ const CommonList = [
     'is',
     'is',
     'am',
-    'am',
-    'am',
-    'to',
-    'to',
-    'of',
     'a',
     'a',
     'a',
@@ -397,30 +435,22 @@ const CommonList = [
     'had',
     'as',
     'do',
-    'do',
-    'do',
+    'the',
+    'the',
+    'the',
     'did',
     'did',
     'did',
-    'at',
     'but',
     'but',
     'but',
-    "won't",
-    "wouldn't",
-    'his',
+    'not',
     'by',
-    'will',
-    'will',
-    'was',
-    'was',
-    'was',
     'and',
     'and',
     'and',
     'shall',
     "isn't",
-    "isn't",
     "wasn't",
     "wasn't",
     'the',
@@ -429,7 +459,14 @@ const CommonList = [
     'a',
     'a',
     'a',
-
+    'this',
+    'this',
+    'that',
+    'this',
+    'those',
+    'is',
+    'is',
+    'is'
 ]
 
 const PrepositionList = [
@@ -483,6 +520,8 @@ let hand = [];
 
 let sentence = [];
 
+let score = 0;
+
 function RenderSentence() {
     ClearSentenceElements();
     sentence.forEach(word => {
@@ -491,14 +530,20 @@ function RenderSentence() {
             'sentence',
             () => IncrementSuffix(word.id),
             'sentence-word',
-            'sentence-word-' + word.id
+            'sentence-word-' + word.id 
         );
     });
+
+    UpdateScore(sentence.length);
 }
 
 function RenderHand() {
     ClearHandElements();
     hand.forEach(word => {
+        
+        
+        
+        
         AddElement(
             word.name,
             'hand',
@@ -537,7 +582,8 @@ function IncrementSuffix(id) {
     RenderSentence();
 }
 
-function GetRandomFromList(list) {
+function GetRandomFromList(list) {  
+
     return list[Math.floor(Math.random() * list.length)];
 }
 
@@ -573,7 +619,23 @@ function AddToSentence(id) {
 
 function GenerateHand() {
     // remove any existing children nodes (previous words)
+    
     ClearHandElements();
+    ClearSentenceElements();
+    
+    
+    
+    
+    score = 0;
+
+    const scoreElement = document.getElementById('score');
+    // delete previous score
+    while (scoreElement.firstChild) {
+        scoreElement.removeChild(scoreElement.firstChild);
+    }
+
+
+    sentence = [];
 
     let listOfWords = [];
     hand = [];
@@ -610,8 +672,25 @@ function HandleSentenceClearedButton () {
     hand.forEach(x => x.isUsed = false);
     
     sentence = [];
-    ClearSentenceElements();
+    RenderSentence();
     RenderHand();
+
+}
+
+function UpdateScore(numWords) {
+    // calculate score
+    score = 0;
+    for (let i = 0; i < numWords; i++) {
+        score = score + i + 1;
+    }
+    const scoreElement = document.getElementById('score');
+    // delete previous score
+    while (scoreElement.firstChild) {
+        scoreElement.removeChild(scoreElement.firstChild);
+    }
+    // add new score
+    var textElement = document.createTextNode("Score: " + score);
+    scoreElement.appendChild(textElement);
 }
 
 function ClearSentenceElements() {
@@ -628,11 +707,18 @@ function ClearHandElements() {
     while (node.firstChild) {
         node.removeChild(node.firstChild);
     }
+    
+    
 }
 
 function SaveSentence() {
+
+
     const sentenceList = [];
     sentence.forEach(x => sentenceList.push(x.name));
     const sentenceString = sentenceList.join(' ');
     AddElement(sentenceString, 'sentences-saved');
 }
+
+
+

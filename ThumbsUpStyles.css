@@ -11,6 +11,29 @@ button {
     cursor: pointer;
 }
 
+h2{
+    color: rgb(7, 74, 150);
+    text-align: center;
+}
+
+h3{
+    
+    text-align: center;
+}
+
+.clicktogethandbutton {
+    text-align: center;
+    margin: 5px 40%;
+    width: 20%;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+   
+  }
+
 .hand-container {
     display: flex;
     width: 100%;
@@ -50,4 +73,16 @@ button {
     margin: 5px;
     user-select: none;
     font-size: 22px;
+}
+
+.score-display {
+    float: right;
+    background-color: white;
+}
+
+.instructions {
+    width: 60%;
+    margin: 0 20%;
+    
+      }
 }
