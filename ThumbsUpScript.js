@@ -16,67 +16,57 @@ const suffixes = [
     'd',
     'ed',
     'ing',
-    "ly",
-    ",",
-    
+    "ly"
 ]
 
 const PronounList = [
-    'am',
-    'the'
-    // 'all',
-    // 'anybody',
-    // 'anyone',
-    // 'anything',
-    // 'each',
-    // 'everybody',
-    // 'everyone',
-    // 'everything',
-    // 'he',
-    // 'her',
-    // 'hers',
-    // 'him',
-    // 'his',
-    // 'I',
-    // 'it',
-    // 'its',
-    // 'itself',
-    // 'many',
-    // 'me',
-    // 'mine',
-    // 'most',
-    // 'my',
-    // 'myself',
-    // 'nobody',
-    // 'none',
-    // 'nothing',
-    // 'one',
-    // 'our',
-    // 'ours',
-    // 'ourselves',
-    // 'several',
-    // 'she',
-    // 'some',
-    // 'someone',
-    // 'something',
-    // 'that',
-    // 'their',
-    // 'theirs',
-    // 'them',
-    // 'there',
-    // 'these',
-    // 'they',
-    // 'this',
-    // 'those',
-    // 'us',
-    // 'we',
-    // 'who',
-    // 'whoever',
-    // 'whose',
-    // 'you',
-    // 'your',
-    // 'yours',
-    // 'yourself',
+    'the',
+    'all',
+    'anybody',
+    'anyone',
+    'anything',
+    'each',
+    'everybody',
+    'everyone',
+    'everything',
+    'he',
+    'her',
+    'hers',
+    'him',
+    'his',
+    'I',
+    'it',
+    'its',
+    'itself',
+    'many',
+    'me',
+    'mine',
+    'most',
+    'my',
+    'myself',
+    'nobody',
+    'none',
+    'nothing',
+    'one',
+    'our',
+    'ours',
+    'ourselves',
+    'several',
+    'she',
+    'some',
+    'someone',
+    'something',
+    'their',
+    'theirs',
+    'there',
+    'they',
+    'those',
+    'who',
+    'whoever',
+    'whose',
+    'you'
+
+    
 ];
 
 const NounList = [
@@ -519,8 +509,13 @@ const PrepositionList = [
 ]
 
 const wordGroups = {
-    "am": ["am", "is", "are", "be", "will be", "was", "have been"],
-    "the": ["the", "this", "those", "these", "a", "that"]
+    "is": ["is", "am", "are", "be", "will be", "was", "have been","has been"],
+    "the": ["the", "a", "this", "those", "these", "that","them"],
+    "have": ["have","has","had","will have"],
+    "get": ["get", "got","gotten"],
+    "do": ["do","did","done"],
+    "we": ["we","us",],
+
 }
 
 let hand = [];
@@ -681,30 +676,38 @@ function GenerateHand() {
 
     // common words
     for (let i = 0; i < configuration.numCommonWords; i++) {
-        listOfWords.push(GetRandomFromList(CommonList));
+        AddRandomWordToHand(listOfWords, CommonList);
     }
     // nouns
     for (let i = 0; i < configuration.numNouns; i++) {
-        listOfWords.push(GetRandomFromList(NounList));
+        AddRandomWordToHand(listOfWords, NounList);
     }
     // pronouns
     for (let i = 0; i < configuration.numPronouns; i++) {
-        listOfWords.push(GetRandomFromList(PronounList));
+        AddRandomWordToHand(listOfWords, PronounList);
     }
     // verbs
     for (let i = 0; i < configuration.numVerbs; i++) {
-        listOfWords.push(GetRandomFromList(VerbList));
+        AddRandomWordToHand(listOfWords, VerbList);
     }
     // adjectives
     for (let i = 0; i < configuration.numAdjectives; i++) {
-        listOfWords.push(GetRandomFromList(AdjectiveList));
+        AddRandomWordToHand(listOfWords, AdjectiveList);
     }
     // prepositions
     for (let i = 0; i < configuration.numPrepositions; i++) {
-        listOfWords.push(GetRandomFromList(PrepositionList));
+        AddRandomWordToHand(listOfWords, PrepositionList);
     }
     listOfWords.forEach((x, i) => AddToWordList(x, i));
     RenderHand();
+}
+
+function AddRandomWordToHand(listToAddTo, listToRetrieveFrom) {
+    let randomWord;
+    while (listToAddTo.includes(randomWord) || randomWord === undefined) {
+        randomWord = GetRandomFromList(listToRetrieveFrom);
+    }
+    listToAddTo.push(randomWord);
 }
 
 function HandleSentenceClearedButton () {
