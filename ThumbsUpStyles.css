@@ -94,6 +94,14 @@ h3{
     margin: 5px;
     user-select: none;
     font-size: 22px;
+    /* border: 2px solid white; */
+}
+
+.sentence-word-selected {
+    /* border-style: solid;
+    border-color: white white black white;
+    border-width: 2px; */
+    text-decoration: underline;
 }
 
 .score-display {

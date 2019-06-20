@@ -3,8 +3,8 @@ const configuration = {
     numCommonWords: 2,
     numNouns: 2,
     numPronouns: 2,
-    numVerbs: 2,    
-    numAdjectives: 2,   
+    numVerbs: 2,
+    numAdjectives: 2,
     numPrepositions: 2
 };
 
@@ -16,7 +16,9 @@ const suffixes = [
     'd',
     'ed',
     'ing',
-    "ly"
+    "ly",
+    "n't",
+    "n",
 ]
 
 const PronounList = [
@@ -66,7 +68,7 @@ const PronounList = [
     'whose',
     'you'
 
-    
+
 ];
 
 const NounList = [
@@ -317,7 +319,7 @@ const VerbList = [
     'pull',
     'flip',
     'explore',
-    'save'    
+    'save'
 ]
 
 const AdjectiveList = [
@@ -395,70 +397,20 @@ const AdjectiveList = [
     'shakey',
     'faded',
     'feisty',
-    'honorable',    
+    'honorable',
     'slim',
     'emphatic'
 ]
 
 const CommonList = [
-    'the',
-    'the',
-    'the',
-    'will be',
-    'will be',
-    'should be',
-    'might be',    
-    'could be',
-    'are',
-    'are',
-    'are',
     'is',
-    'is',
-    'is',
-    'am',
-    'a',
-    'a',
-    'a',
-    'that',
+    'the',
     'have',
-    'have',
-    'have',
-    'had',
-    'had',
-    'as',
-    'do',
-    'the',
-    'the',
-    'the',
-    'did',
-    'did',
-    'did',
-    'but',
-    'but',
-    'but',
-    'not',
-    'by',
-    'and',
-    'and',
-    'and',
-    'shall',
-    "isn't",
-    "wasn't",
-    "wasn't",
-    'the',
-    'the',
-    'the',
-    'a',
-    'a',
-    'a',
-    'this',
-    'this',
-    'that',
-    'this',
-    'those',
-    'is',
-    'is',
-    'is'
+    'get',
+    "do",
+    "we",
+    "and",
+
 ]
 
 const PrepositionList = [
@@ -498,7 +450,6 @@ const PrepositionList = [
     'behind',
     'beyond',
     'except',
-    'but',
     'up',
     'out',
     'around',
@@ -506,16 +457,17 @@ const PrepositionList = [
     'off',
     'above',
     'near',
+
 ]
 
 const wordGroups = {
-    "is": ["is", "am", "are", "be", "will be", "was", "have been","has been"],
-    "the": ["the", "a", "this", "those", "these", "that","them"],
-    "have": ["have","has","had","will have"],
-    "get": ["get", "got","gotten"],
-    "do": ["do","did","done"],
-    "we": ["we","us",],
-
+    "is": ["is", "am", "are", "be", "will be", "was", "have been", "has been"],
+    "the": ["the", "a", "this", "those", "these", "that", "them"],
+    "have": ["have", "has", "had", "will have"],
+    "get": ["get", "got", "gotten"],
+    "do": ["do", "did", "done", "will do", "have done"],
+    "we": ["we", "us", "our"],
+    "and": ["but", "or", "however", "yet"],
 }
 
 let hand = [];
@@ -523,6 +475,7 @@ let hand = [];
 let sentence = [];
 
 let score = 0;
+let selectedSentenceWord = null;
 
 function RenderSentence() {
     ClearElements('sentence');
@@ -538,28 +491,29 @@ function RenderSentence() {
         AddElement(
             wordToDisplay,
             'sentence',
-            () => IncrementAlternateId(word.id, alternateWordList),
-            'sentence-word',
+            () => HandleSentenceWordClick(word.id),
+            `sentence-word ${word.id === selectedSentenceWord ? 'sentence-word-selected' : ''}`,
             'sentence-word-' + word.id
         );
     });
 
     ClearElements('alternate-options');
-    if (sentence.length > 0) {
-        const finalWord = sentence[sentence.length - 1];
+    if (sentence.length > 0 && selectedSentenceWord !== null) {
+        const selectedWord = sentence.filter(x => x.id === selectedSentenceWord)[0];
         let alternateOptions = [];
-        if (wordGroups[finalWord.name]) {
-            wordGroups[finalWord.name].forEach(x => alternateOptions.push(x));
+        if (wordGroups[selectedWord.name]) {
+            wordGroups[selectedWord.name].forEach(x => alternateOptions.push(x));
         }
         else {
             suffixes.forEach(x => alternateOptions.push(x));
         }
+
         for (let i = 0; i < alternateOptions.length; i++) {
             const option = alternateOptions[i];
             AddElement(
                 (option === '' ? '[none]' : option),
                 'alternate-options',
-                () => SetAlternateId(finalWord.id, i),
+                () => SetAlternateId(selectedWord.id, i),
                 'alternate-word',
                 'alternate-word-option-' + i);
         }
@@ -585,7 +539,7 @@ function RenderHand() {
 function BackspaceSentence() {
     // remove last word from sentence
     const lastWord = sentence.pop();
-    
+
     // find word in hand and remove disabled class
     for (let i = 0; i < hand.length; i++) {
         if (lastWord.id === hand[i].id) {
@@ -594,20 +548,13 @@ function BackspaceSentence() {
         }
     }
 
+    // if backspacing the selected word, remove selection
+    if (lastWord.id === selectedSentenceWord) {
+        selectedSentenceWord = null;
+    }
+
     RenderSentence();
     RenderHand();
-}
-
-function IncrementAlternateId(sentenceItemId, alternateList) {
-    for (let i = 0; i < sentence.length; i++) {
-        if (sentence[i].id === sentenceItemId) {
-            sentence[i].alternateId++;
-            if (sentence[i].alternateId >= alternateList.length) {
-                sentence[i].alternateId = 0;
-            }
-        }
-    }
-    RenderSentence();
 }
 
 function SetAlternateId(sentenceItemId, alternateId) {
@@ -619,7 +566,7 @@ function SetAlternateId(sentenceItemId, alternateId) {
     RenderSentence();
 }
 
-function GetRandomFromList(list) {  
+function GetRandomFromList(list) {
 
     return list[Math.floor(Math.random() * list.length)];
 }
@@ -646,17 +593,31 @@ function AddToSentence(id) {
             // mark as used
             hand[i].isUsed = true;
             // add element to sentence
-            sentence.push({ id: id, name: hand[i].name, alternateId: 0 });
+            sentence.push({
+                id: id,
+                name: hand[i].name,
+                alternateId: 0
+            });
             break;
         }
     }
+    SelectSentenceWord(id);
     RenderSentence();
     RenderHand();
 }
 
+function HandleSentenceWordClick(id) {
+    SelectSentenceWord(id);
+    RenderSentence();
+}
+
+function SelectSentenceWord(id) {
+    selectedSentenceWord = id;
+}
+
 function GenerateHand() {
     // remove any existing children nodes (previous words)
-    
+
     ClearElements('hand');
     ClearElements('sentence');
     ClearElements('alternate-options');
@@ -710,9 +671,9 @@ function AddRandomWordToHand(listToAddTo, listToRetrieveFrom) {
     listToAddTo.push(randomWord);
 }
 
-function HandleSentenceClearedButton () {
+function HandleSentenceClearedButton() {
     hand.forEach(x => x.isUsed = false);
-    
+
     sentence = [];
     RenderSentence();
     RenderHand();
