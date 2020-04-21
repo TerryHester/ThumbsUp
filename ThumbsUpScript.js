@@ -1,9 +1,10 @@
 // set configurable values here
 const configuration = {
     
-    numStarterWords: 2,
-    numNouns: 2,
-    numVerbs: 2,
+    numStarterWords: 1,
+    commonWords: 2,
+    numNouns: 1,
+    numVerbs: 1,
     numAdjectives: 2,
     numAdverbs: 1,
 };
@@ -23,17 +24,17 @@ const suffixes = [
 
 const StarterWords = [
     "I",
-    "I",
-    "I",
-    "I",
-    "I",
+    
     "Mr.Somebody",
-    "is",
+             
+]
+
+const commonWords = [  
+  
     "be", 
     "us",
     "me",
     "me",
-    "him",
     "him",
     "these",
     "for",
@@ -41,8 +42,6 @@ const StarterWords = [
     "and",
     'by',
     'with',
-    "do",
-    "do",
     "do",
     "get",
     "have",
@@ -53,12 +52,15 @@ const StarterWords = [
     'in', 
     'despite',
     "of",
-    "of",
-    "of",
-
-      
+    "to",
+    "in",
+    "them",
+    "he",
+    "who",
+    "can",
+    "is",
+          
 ]
-
 
 
 
@@ -68,7 +70,7 @@ const StarterWords = [
     "these":["these","those","this","that","themselves"],
     "him":["him","her"],
     "us":["us","ourselves"],
-    "me":["me","myself","I"],
+    "I":["I","me","myself","I"],
     "and":["and","or","yet","but"],
     "for":["for","instead of","in spite of"],
     "in":["in","into","inside","in turn"],
@@ -758,20 +760,11 @@ const NounList = [
 "suede",
 "sugar",
 
-"summer",
-
 "Sunday",
 "sunflower",
 "sunshine",
 "supermarket",
-
-"support",
 "surfboard",
-
-
-"target",
-"taste",
-
 "tax",
 "taxi",
 "taxicab",
@@ -1243,6 +1236,11 @@ function GenerateHand() {
     // adjectives
     for (let i = 0; i < configuration.numAdjectives; i++) {
         AddRandomWordToHand(listOfWords, AdjectiveList);
+    }
+
+    // adverbs
+    for (let i = 0; i < configuration.numAdverb; i++) {
+        AddRandomWordToHand(listOfWords, AdverbList);
     }
     
     listOfWords.forEach((x, i) => AddToWordList(x, i));
