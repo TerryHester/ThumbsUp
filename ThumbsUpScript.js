@@ -2,10 +2,10 @@
 const configuration = {
     
   
-    numCommonWords: 3,
+    numCommonWords: 4,
     numNouns: 2,
     numVerbs: 2,
-    numAdjectives:2,
+    numAdjectives:1,
     numAdverbs: 1,
 };
 
@@ -19,13 +19,35 @@ const suffixes = [
     'ed',
     'ing',
     "ly",
+    "y",
     "ful",
     "n",
 ]
 
 const CommonList = [  
   
-    "I",    
+    "the",
+    "the",
+    "the",
+    "the", 
+    "the",
+    "and", 
+    
+    "I", 
+    "I", 
+    "of", 
+    "by", 
+    "to", 
+    "for", 
+    "will", 
+    "I",
+    "I", 
+    
+    "with",
+    "in",
+    "be",
+   
+    
     "him",     
     "get",
     "have",
@@ -36,29 +58,37 @@ const CommonList = [
     "me",
     "do",
     "is",
+    "is",
+    "is",
     "about",
     "before", 
     "have",   
-    "this",
+    
     "please",
     "was",
     "in",
-    "this",
+    
     "who",
     "can",
     "will",
     "it",
+    "it",
 ]
 
    const wordGroups = {
+    "the":["the","a","an","this","these","those","that","them","themselves"], 
+    "do":["do","did","does","didn't","will do","doesn't"],
     "me":["me","my","mine","myself"],   
     "is":["is","isn't","will","will be","am"],
-    "will":["will","will be","won't","would", "would be","shall"],
+    "will":["will","will be","won't","won't be","would", "would be","shall","shall be"],
     "was":["was","wasn't","were","weren't","would"],
-    "be": ["be", "being", "am being", "is being", "will be", "have been", "has been"],
+    "be": ["be", "am", "being", "am being", "is being", "will be", "have been", "has been"],
     "have": ["have", "has", "had", "will have", "having had"],
     "it": ["it", "itself", "it's", "its"],
-    "this":["this","these","those","that","them","themselves"],
+
+
+
+  
     "he":["he","she","him","her","his","hers","himself", "herself"], 
     "we": ["we", "us", "our","ours","we ourself", "we ourselves"],   
     "and":["and","or","yet","but"],
@@ -69,6 +99,9 @@ const CommonList = [
     "with": ["with","without", "within", "along with"],    
     "get": ["get", "got", "gotten", "gets", "getting",],
     "do": ["do", "did", "doing", "does", "done", "will do", "have done","has done"],
+
+
+
    
     "someone": ["someone", "somebody","somehow","somewhere", "sometimes"],
     "and": ["and", "but", "or", "however", "yet"],
@@ -79,8 +112,9 @@ const CommonList = [
     "before": ["before", "after", "following", "during", "previous to", "subsequent to","until"],
     "no one": ["no one", "no body", "nothing"],
     "something": ["something", "anything", "everything", "nothing"],
+
     "with": ["with", "without", "within"],
-    "his": ["his", "hers", "ours", "there's"],
+    "him": ["him","her","his", "hers", "ours", "their", "theirs"],
     "I": ["I", "me", "mine","myself"],
     "it": ["it", "it's", "its", "itself"],
     "our": ["our", "ours","ourself", "ourselves"],
@@ -90,8 +124,9 @@ const CommonList = [
     "would": ["would", "wouldn't","won't","should", "shouldn't","could","couldn't","can't"],
     "to": ["to", "from", "at", "over","under", "through","around","on","upon"],
     "who": ["who", "whom", "whoever", "whose"],
-
     "with": [ "with", "within","without"],
+
+  
 }
 
 
@@ -835,6 +870,8 @@ const VerbList = [
 "burst",
 "surround",
 "stab",
+"indulge",
+"mesmerize",
 "return",
 "medicate",
 "blindside",
@@ -964,6 +1001,7 @@ const AdjectiveList = [
 "slippery",
 "stubborn",
 "tripping",
+"explosive",
 "infamous",
 "sinister",
 "costumed",
@@ -997,6 +1035,7 @@ const AdjectiveList = [
 "scater-brained",
 "house-broken",
 "no-good",
+"extrordinary",
 "cruel-hearted",
 "misunderstood",
 "narrow-minded",
@@ -1004,9 +1043,12 @@ const AdjectiveList = [
 "fiercely-loyal",
 "out-of-control",
 "Canadian",
+"introverted",
+"intimate",
 "flimsey",
 "incidious",
 "old",
+"belly aching",
 "bashful",
 "elementary",
 "bountiful",
