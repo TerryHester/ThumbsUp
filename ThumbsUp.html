@@ -44,17 +44,19 @@
                 
                 <button class="collapsible">How To Play (show/hide)</button>
                 <div class="content">
-                  <p>Thumbs Up is a fun word game for everyone. This is a prototype so it's just the basics with few bells and whistles. Keep an eye out for improvements as the game goes through development. The game can be played by one person or many. How you play the game as a group is largely up to you. The following are just suggestions.<p>
+                  <p>Thumbs Up is a fun word game for everyone. The game can be played by one person or many.<p
                 
-                Each player will take a turn at building their own sentence. To begin, click on the "Deal My Hand" button. Now you have the words that you will use to make your sentence. Your hand is made up of words from all of the basic parts of speech. <p> You build your sentence by clicking on the words in your hand that you wish to use to form your sentence in the order that you want them to appear in your sentence.
+                For group play, each player will take a turn at building their own sentence. To begin, click on the 'Deal My Hand" button. Now you have the words that you will use to make your sentence. <p> 
                 
-                You only have the words in your hand to work with. There is only one way to make changes to those words after they appear in your sentence. If you click on any of the words already placed in your sentence, you may make some changes to the endings. You can cycle through a short list of options which returns you to the word as it was. This may result in some spelling problems. For example "run" becomes "runing". The "n" is not doubled. But that's okay. Remember, it's a game not a grammar quiz! Don't get discouraged if you feel your hand looks impossible at first. If you keep trying, you will come up with a really cool sentence. <p>
+                You build your sentence(s) by clicking on the words in your hand that you wish to use to form your sentence.
                 
-                Once the player is satisfied with his or her sentence, it is up to the other contestants to decide if it is a valid sentence. A sentence is not judged on the bases of whether or not it makes perfect sense in the real world. It is valid if it makes sense under any circumstances. Yes, even the most crazy circumstances. As long as verbs are used as verbs, nouns as nouns, etc. then the sentence is good.
+                You may make changes to any of the words in your sentence by clicking on the words you which to replace or alter the ending of, and then choosing a replacement word or ending from the list that appears below. Altering an ending may result in some spelling problems. For example "run" becomes "runing". The "n" is not doubled. But that's okay. Remember, it's a game not a grammar quiz!. <p>
                 
-                The rest of the players are then asked, "Is this a valid sentence?" If at least half of the group gives a "Thumbs Up" sign, then the sentence is accepted. <p> Points (displayed in the lower right hand corner of the screen) are calculated in the following way: One point for the first word, two points are added to the current points for the second word (so a two word sentence would be 3 points), and so forth. You may assign someone to keep track of points. <p>
+                Once the player is satisfied with his or her sentence, it is up to the other contestants to decide if it is a valid sentence. A sentence is not judged on the bases of whether or not it makes perfect sense in the real world. It is valid if it makes sense under any circumstances; even the most crazy circumstances. As long as verbs are used as verbs, nouns as nouns, etc. then the sentence is good.
+                
+                The rest of the players are then asked, "Is this a valid sentence?" If at least half of the group gives a "Thumbs Up" sign, then the sentence is accepted. <p> Points are calculated in the following way: One point for the first word, two points are added to the current points for the second word (so a two word sentence would be 3 points), and so forth.<p>
                  
-                Awards can be given for the most logical sentence, the strangest sentence, the most unique sentence or the funniest sentence. Remember, it's all about having fun.</p>
+                Awards can be given for the most logical sentence(s), the strangest sentence, the most unique sentence or the funniest sentence. Remember, it's all about having fun.</p>
                 </div>
                 
                 
@@ -94,7 +96,27 @@
             <div id="alternate-options" class="alternate-container"></div>
             <button onClick="HandleSentenceClearedButton()">Clear Sentence</button>
             <button onClick="BackspaceSentence()">Delete Last Word</button>
+            <button onClick="AddSpecialCharacter(',')">Comma</button>
+            <button onClick="AddSpecialCharacter('.')">Period</button>
+            <button onClick="AddSpecialCharacter('the')">the</button>
+            <button onClick="AddSpecialCharacter('and')">and</button>
+            <button onClick="AddSpecialCharacter('a')">a</button>
+            <button onClick="AddSpecialCharacter('I')">I</button>
+            <button onClick="AddSpecialCharacter('of')">of</button>
+            <button onClick="AddSpecialCharacter('by')">by</button>
+            <button onClick="AddSpecialCharacter('to')">to</button>
+            <button onClick="AddSpecialCharacter('for')">for</button>
+            <button onClick="AddSpecialCharacter('did')">did</button>
+            <button onClick="AddSpecialCharacter('will')">will</button>
+            <button onClick="AddSpecialCharacter('with')">with</button>
+            <button onClick="AddSpecialCharacter('in')">in</button>
+            <button onClick="AddSpecialCharacter('is')">is</button>
+            <button onClick="AddSpecialCharacter('be')">be</button>
+            <button onClick="AddSpecialCharacter('this')">this</button>
+            <button onClick="AddSpecialCharacter('be')">it</button>
             <button onClick="SaveSentence()">Save Sentence</button>
+            
+            
             <div id="score" class="score-display"></div>
         </div>
         <div id="sentences-saved"></div>

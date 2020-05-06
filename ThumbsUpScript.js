@@ -1,11 +1,11 @@
 // set configurable values here
 const configuration = {
     
-    numStarterWords: 1,
-    commonWords: 2,
-    numNouns: 1,
-    numVerbs: 1,
-    numAdjectives: 2,
+  
+    numCommonWords: 3,
+    numNouns: 2,
+    numVerbs: 2,
+    numAdjectives:2,
     numAdverbs: 1,
 };
 
@@ -14,6 +14,7 @@ const suffixes = [
     's',
     'es',
     "'s",
+    "er",
     'd',
     'ed',
     'ing',
@@ -22,73 +23,59 @@ const suffixes = [
     "n",
 ]
 
-const StarterWords = [
-    "I",
-    
-    "Mr.Somebody",
-             
-]
-
-const commonWords = [  
+const CommonList = [  
   
-    "be", 
-    "us",
-    "me",
-    "me",
-    "him",
-    "these",
-    "for",
-    "in",
-    "and",
-    'by',
-    'with',
-    "do",
+    "I",    
+    "him",     
     "get",
     "have",
     "who",
-    "would",
-    "about",
-    "before",   
-    'in', 
-    'despite',
-    "of",
-    "to",
-    "in",
-    "them",
+    "be",
     "he",
+    "be",
+    "me",
+    "do",
+    "is",
+    "about",
+    "before", 
+    "have",   
+    "this",
+    "please",
+    "was",
+    "in",
+    "this",
     "who",
     "can",
-    "is",
-          
+    "will",
+    "it",
 ]
 
-
-
-
    const wordGroups = {
-    "Mr.Somebody":["Mr. Peabody","Mr. Felspar","Mr. McDoogle","Mr. Muffin","Mrs. Carbunkle","Miss. Prissy","Mr. Mojo"],
-    "these":["these","those","this","that","themselves"],
-    "him":["him","her"],
-    "us":["us","ourselves"],
-    "I":["I","me","myself","I"],
+    "me":["me","my","mine","myself"],   
+    "is":["is","isn't","will","will be","am"],
+    "will":["will","will be","won't","would", "would be","shall"],
+    "was":["was","wasn't","were","weren't","would"],
+    "be": ["be", "being", "am being", "is being", "will be", "have been", "has been"],
+    "have": ["have", "has", "had", "will have", "having had"],
+    "it": ["it", "itself", "it's", "its"],
+    "this":["this","these","those","that","them","themselves"],
+    "he":["he","she","him","her","his","hers","himself", "herself"], 
+    "we": ["we", "us", "our","ours","we ourself", "we ourselves"],   
     "and":["and","or","yet","but"],
     "for":["for","instead of","in spite of"],
     "in":["in","into","inside","in turn"],
-    "is":["was","isn't","wasn't","were","weren't"],
     "about":["about","concerning","to the point of"],
-    "by": ["by", "beside", "along", "between","by way of", "past"],
-    "with": ["with","without", "within", "along with"],
-    "be": ["be", "being", "will be", "have been", "has been"],
-    "have": ["have", "has", "had", "will have", "having had"],
+    "by": ["by", "beside", "along", "between","beneath"],
+    "with": ["with","without", "within", "along with"],    
     "get": ["get", "got", "gotten", "gets", "getting",],
-    "do": ["do", "did", "doing", "does", "done", "will do", "have done"],
-    "we": ["we", "us", "our","ours","we ourself", "we ourselves"],
+    "do": ["do", "did", "doing", "does", "done", "will do", "have done","has done"],
+   
     "someone": ["someone", "somebody","somehow","somewhere", "sometimes"],
     "and": ["and", "but", "or", "however", "yet"],
-    "to": ["to","over", "under", "across","through","throughout", "around","against","among"],
+    "to": ["to","too","over", "under", "across","through","throughout", "around","against","among"],
     "in": ["in","into"],
     "on": ["on", "onto"],
-    "despite": ["despite","in spite of"],
+    "despite": ["despite","in spite of","instead of"],
     "before": ["before", "after", "following", "during", "previous to", "subsequent to","until"],
     "no one": ["no one", "no body", "nothing"],
     "something": ["something", "anything", "everything", "nothing"],
@@ -98,7 +85,6 @@ const commonWords = [
     "it": ["it", "it's", "its", "itself"],
     "our": ["our", "ours","ourself", "ourselves"],
     "them": ["them","themself", "themselves"],
-    "he": ["he","she","him","her","his","hers","himself", "herself"],
     "who": ["who", "whom", "whoever", "whose"],
     "can": ["can", "can't", "could", "couldn't"],
     "would": ["would", "wouldn't","won't","should", "shouldn't","could","couldn't","can't"],
@@ -215,18 +201,14 @@ const NounList = [
 "band",
 "bandana",
 "banjo",
-"bank",
 "banker",
-"bar",
 
 "barber",
 "barge",
 "baritone",
 "barometer",
-"base",
-"baseball",
-"basement",
 
+"baseball",
 
 "basketball",
 "bass",
@@ -581,7 +563,7 @@ const NounList = [
 
 "juice",
 
-"jumbo",
+
 
 "kayak",
 "kendo",
@@ -885,7 +867,6 @@ const VerbList = [
 "smack",
 "peddle",
 "balance",
-"trip up",
 "boggle",
 "poke",
 "critique",
@@ -928,7 +909,7 @@ const AdjectiveList = [
 "namby-pamby",
 "wonky",
 "hairless",
-
+"jumbo",
 "wild",
 "domesticated",
 "abnormal",
@@ -976,14 +957,14 @@ const AdjectiveList = [
 "arrogant",
 "confused",
 "flirting",
-"high-end",
+"hysterical",
 "insecure",
 "maniacal",
 "sickened",
 "slippery",
 "stubborn",
 "tripping",
-"vengeful",
+"infamous",
 "sinister",
 "costumed",
 "cowardly",
@@ -993,20 +974,20 @@ const AdjectiveList = [
 "demanding",
 "shivering",
 "offensive",
-"nighttime",
+"monotonous",
 "startling",
 "disgusting",
 "slap happy",
 "disturbing",
 "adulterous",
-"blathering",
-"flickering",
-"rebellious",
-"impertinent",
+"exhilarating",
+"frustrated",
+"exhausting",
+"higly influential",
 "bull headed",
 "hyperactive",
 "infuriating",
-"outnumbered",
+"exceptional",
 "pea-brained",
 "territorial",
 "underhanded",
@@ -1024,20 +1005,61 @@ const AdjectiveList = [
 "out-of-control",
 "Canadian",
 "flimsey",
+"incidious",
+"old",
 "bashful",
 "elementary",
-
+"bountiful",
+"shady",
+"groggy",
 ]
 
 // adverbs
 const AdverbList = [
-"cattywampus",
-"fiddledeedee",
-"eschew",
-"groggy",
-"hitherto",
+"festivly",
+"energeticaly",
+"hereafter",
 "indubitably",
 "bonkers",
+"sadly",
+"fevorishly",
+"painstakingly",
+"presumptiously",
+"hardly",
+"effortlessly",
+"briskly",
+"kindly",
+"elegantly",
+"empathically",
+
+"deliberately",
+"doubtfully",
+"easily",
+"elegantly",
+"enormously",
+"enthusiastically",
+"equally",
+"eventually",
+"exactly",
+"faithfully",
+"fiercely",
+"fondly",
+"fortunately",
+"frantically",
+"gladly",
+"gracefully",
+"happily",
+"hastily",
+"hourly",
+"solemnly",
+"speedily",
+"stealthily",
+"sternly",
+"suddenly",
+"suspiciously",
+"swiftly",
+"tenderly",
+"thoughtfully",
 
 ]
 
@@ -1215,12 +1237,7 @@ function GenerateHand() {
     let listOfWords = [];
     hand = [];
 
-    // StarterWords
-    for (let i = 0; i < configuration.numStarterWords; i++) {
-        AddRandomWordToHand(listOfWords, StarterWords);
-    }
-
-    // common words
+   // common words
     for (let i = 0; i < configuration.numCommonWords; i++) {
         AddRandomWordToHand(listOfWords, CommonList);
     }
@@ -1239,7 +1256,7 @@ function GenerateHand() {
     }
 
     // adverbs
-    for (let i = 0; i < configuration.numAdverb; i++) {
+    for (let i = 0; i < configuration.numAdverbs; i++) {
         AddRandomWordToHand(listOfWords, AdverbList);
     }
     
